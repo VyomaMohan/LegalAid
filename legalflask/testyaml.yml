@@ -1,0 +1,5 @@
+resource: ["section 1","section 2"]
+computer: ["section 1","section 3","section 4"]
+communication: ["section 2","section 3"]
+notification: ["section 1"]
+documents: ["section 1"]
