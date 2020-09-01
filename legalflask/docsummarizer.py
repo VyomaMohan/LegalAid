@@ -13,13 +13,22 @@ nltk.download('stopwords')
 
 def read_article(file_name):
     filedata = file_name
+    print("FileData is:")
+    print(filedata)
+    
     article = filedata.split(". ")
+    print("Article is:")
+    for i in article:
+        print("line:",i)
     sentences = []
 
     for sentence in article:
         print(sentence)
         sentences.append(sentence.replace("[^a-zA-Z]", " ").split(" "))
     sentences.pop() 
+    
+    print ("Sentences are:")
+    print(sentences)
     
     return sentences
 
@@ -61,7 +70,7 @@ def build_similarity_matrix(sentences, stop_words):
 
     return similarity_matrix
 
-def generate_summary(file_name, top_n=5):
+def generate_summary(file_name, top_n=1):
     stop_words = stopwords.words('english')
     summarize_text = []
 
@@ -78,13 +87,20 @@ def generate_summary(file_name, top_n=5):
     
     ranked_sentence = sorted(((scores[i],s) for i,s in enumerate(sentences)), reverse=True)    
     print("Indexes of top ranked_sentence order are ", ranked_sentence)    
-
+    
+    if(top_n>len(ranked_sentence)):
+        top_n=1
+    
     for i in range(top_n):
       summarize_text.append(" ".join(ranked_sentence[i][1]))
 
-    return summarize_text
+    
+    print("Summarize Text: \n", ". ".join(summarize_text))
+    result=". ".join(summarize_text)
+    return result
 
 
 def docsummarizer(textpassage):
     result = generate_summary(textpassage, 2)
-    return result
+    print("Finished summary")
+    return {"response":result}

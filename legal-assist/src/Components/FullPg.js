@@ -9,6 +9,7 @@ class FullPg extends React.Component{
     }
 
     render(){
+
         return(
             <div id='fullpage'>
                 <Navbar/>

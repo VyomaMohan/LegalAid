@@ -20,4 +20,8 @@ def documentreader(imagefile):
     
     pytesseract.pytesseract.tesseract_cmd=r"C:\Program Files\Tesseract-OCR\tesseract.exe"
     custom_config = r'--oem 3 --psm 6'
-    return pytesseract.image_to_string(pil_image,lang='eng',config=custom_config)
+    
+    passageString=pytesseract.image_to_string(pil_image,lang='eng',config=custom_config)
+    passageString=passageString.replace('\n',' ')
+    
+    return passageString

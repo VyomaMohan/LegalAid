@@ -15,6 +15,9 @@ import DocumentProcessing from './DocumentProcessing';
 import DescSimilar from './DescSimilar';
 import SimilarCase from './SimilarCase';
 
+import DescFindLawyer from './DescFindLawyer';
+import FindLawyer from './FindLawyer';
+
 
 class Navbar extends React.Component{
     constructor(props){
@@ -24,6 +27,7 @@ class Navbar extends React.Component{
         this.documentClickHandler.bind(this);
         this.similarClickHandler.bind(this);
         this.appNameClickHandler.bind(this);
+        this.findLawyerClickHandler.bind(this);
     }
 
     appNameClickHandler(){
@@ -46,19 +50,26 @@ class Navbar extends React.Component{
         ReactDOM.render(<SimilarCase/>,document.getElementById('content'))
     }
 
+    findLawyerClickHandler(){
+        ReactDOM.render(<DescFindLawyer/>,document.getElementById('description'))
+        ReactDOM.render(<FindLawyer/>,document.getElementById('content'));
+
+    }
+
     render(){
         return(
             <div>
                 <Menu
         theme="dark"
         mode="horizontal"
-        defaultSelectedKeys={['2']}
+        defaultSelectedKeys={['0']}
         style={{ lineHeight: '64px' }}
       >
         <Menu.Item key="0" onClick={this.appNameClickHandler}><img src="https://amrel.com/wp-content/uploads/2014/06/cute-robot-drawing1.jpg" alt="robot" width="60" height="60"/> <b>Legal Assistant</b></Menu.Item>
         <Menu.Item key="1" onClick={this.relevantClickHandler}>Relevant laws</Menu.Item>
         <Menu.Item key="2" onClick={this.documentClickHandler}>Document processing</Menu.Item>
         <Menu.Item key="3" onClick={this.similarClickHandler}>Similar cases</Menu.Item>
+        <Menu.Item key="4" onClick={this.findLawyerClickHandler}>Find Lawyer</Menu.Item>
         {/* <Menu.Item key="4">nav 4</Menu.Item> */}
       </Menu>
             </div>

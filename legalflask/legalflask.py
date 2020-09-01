@@ -13,6 +13,7 @@ import relevantlaws
 import documentreader
 import docsummarizer
 import recognizename
+import mongohelper
 
 app=Flask(__name__)
 CORS(app, support_credentials=True)
@@ -24,10 +25,11 @@ def helloworld():
 @app.route('/similar',methods=["GET"])
 @cross_origin(supports_credentials=True)
 def returnsSimilarCases():
+    print("Reached method")
     caseString=request.args.get("cstring")
     strlist=caseString.split(" ")
     caseString="+".join(strlist)
-    #print(caseString)
+    print(caseString)
     resultString=webscrapingprog.webscrapingprog(caseString)
     res=make_response(jsonify(resultString), 200)
     return res
@@ -51,7 +53,7 @@ def documentAnalysis():
         pic_content= documentreader.documentreader(imagefile)
         #print(pic_content)
         pic_summary=docsummarizer.docsummarizer(pic_content)
-        print(pic_summary[0])
+        print(pic_summary)
         res=make_response(jsonify(pic_summary),200)
         
     except Exception as err:
@@ -66,6 +68,31 @@ def documentEntities():
         pic_content=documentreader.documentreader(imagefile)
         name_list=recognizename.recognizename(pic_content)
         res=make_response(jsonify(name_list),200)
+    except Exception as err:
+        print(err)
+    return res
+
+@app.route('/dbgetall',methods=["GET"])
+@cross_origin(supports_credentials=True)
+def getAllFromDb():
+    try:
+        results=mongohelper.getAll()
+        res=make_response(jsonify(results),200)
+    except Exception as err:
+        print(err)
+    return res
+
+@app.route('/dbparticular',methods=["GET"])
+@cross_origin(supports_credentials=True)
+def getParticular():
+    field=request.args.get("field")
+    print("Argument is"+field)
+    fee=request.args.get("fee")
+    print("Argument is"+fee)
+    
+    try:
+        results=mongohelper.getParticular(field,fee)
+        res=make_response(jsonify(results),200)
     except Exception as err:
         print(err)
     return res

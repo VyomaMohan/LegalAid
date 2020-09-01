@@ -20,11 +20,12 @@ def recognizename(text):
     name_list=[]
 
     for i in temp_list.ents:
-        name_list.append({"name":i.text,"label":i.label})
+        if i.text.isdigit()==False:
+            name_list.append({"name":i.text,"label":i.label})
     
-    res = list(set(chain.from_iterable(sub.values() for sub in name_list)))
+    #res = list(set(chain.from_iterable(sub.values() for sub in name_list)))
     
-    return res
+    return name_list
     
 
 

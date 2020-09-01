@@ -14,6 +14,14 @@ class ContentStart extends React.Component{
              {
                 title:"Document analysis",
                 desc:"Takes a picture of a document and scans for the content. From the content, provides a summary."
+            },
+            {
+                title:"Similar cases",
+                desc:"Analyses a short description of the problem statement and provides links to similar cases on trusted websites"
+            },
+            {
+                title:"Find lawyer",
+                desc:"Find a suitable lawyer to argue your case. Narrow them down according to your criteria."
             }
         ]
         }
