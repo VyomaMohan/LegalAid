@@ -12,7 +12,9 @@ class RelevantLaw extends React.Component{
 
         this.state={
             problemString:'',
-            relevantLaws:[]
+            relevantLaws:[],
+            field:'',
+            relevantLawyers:[]
         }
 
         this.handleInputChange=this.handleInputChange.bind(this)
@@ -41,6 +43,25 @@ class RelevantLaw extends React.Component{
                 ...this.state,
                 relevantLaws:stateObj
             })
+            if(stateObj[0]!=undefined)
+            this.setState({
+                ...this.state,
+                field:stateObj[0].law
+            })
+        })
+
+        await fetch("http://127.0.0.1:5000/lawyerfield?field="+this.state.field,{
+            method:"GET"
+        }).then((response)=>{
+            console.log(response)
+            return response.json()
+        }).then((parsedJson)=>{
+            var messageJson=JSON.stringify(parsedJson)
+            var stateObj=JSON.parse(messageJson)
+            this.setState({
+                ...this.state,
+                relevantLawyers:stateObj
+            })
         })
 
         console.log(this.state.relevantLaws)
@@ -57,10 +78,19 @@ class RelevantLaw extends React.Component{
                 <Button type="primary" onClick={this.onClickHandler}>Find relevant laws</Button>
                 <p>Note: The higher the relevance percentage for a law, the more likely it is to be useful for the case.</p>
                 <div>
-                    <Table dataSource={this.state.relevantLaws}>
+                    {this.state.relevantLaws!=undefined && <Table dataSource={this.state.relevantLaws}>
                         <Column title="Relevant Law" dataIndex="law" key="law"></Column>
                         <Column title="Relevance Percentage" dataIndex="rel" key="rel"></Column>
-                    </Table>
+                    </Table>}
+                </div>
+                <p>Recommended lawyers</p>
+                <div>
+                    { this.state.relevantLawyers != undefined && <Table dataSource={this.state.relevantLawyers}>
+                            <Column title="Name" dataIndex="name" key="name"></Column>
+                            <Column title="Phone Number" dataIndex="phonenumber" key="phonenumber"></Column>
+                            <Column title="Field" dataIndex="field" key="field"></Column>
+                            <Column title="Average Fee" dataIndex="avgfee" key="avgfee"></Column>
+                    </Table>}
                 </div>
             </div>
         )

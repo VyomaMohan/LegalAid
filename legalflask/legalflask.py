@@ -97,6 +97,20 @@ def getParticular():
         print(err)
     return res
 
+@app.route('/lawyerfield',methods=["GET"])
+@cross_origin(supports_credentials=True)
+def getLawyerField():
+    field=request.args.get("field")
+    print("Argument is"+field)
+    
+    try:
+        results=mongohelper.getLawyerField(field)
+        res=make_response(jsonify(results),200)
+    except Exception as err:
+        print(err)
+    
+    return res
+
 
 if __name__=='__main__':
     app.run()

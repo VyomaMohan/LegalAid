@@ -14,9 +14,9 @@ from nltk.tokenize import word_tokenize
 sentence =""
 vocab=[]
 
-keyword_stream = open('testyaml.yml', 'r')
+keyword_stream = open('testyaml2.yml', 'r')
 data = yaml.load(keyword_stream,Loader=yaml.FullLoader)
-relevance_stream=open('testrel.yml','r') #here
+relevance_stream=open('testrel2.yml','r') #here
 rel_data=yaml.load(relevance_stream,Loader=yaml.FullLoader)
 
 def common(a,b):
@@ -71,6 +71,10 @@ def relevantlaws(probstring):
         if(total_words!=0):
             relevance_percent=(similar_words/total_words)*100
             rellist.append(relevance_percent)
+    
+    print(lawlist)
+    print(rellist)
+    
     
     for i in range(0,len(lawlist)):
         response.append({"law":lawlist[i],"rel":rellist[i]})

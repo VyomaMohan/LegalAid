@@ -39,4 +39,23 @@ def getParticular(field,fee):
         templist.append({"name":x["name"],"phonenumber":x["phonenumber"],"field":x["field"],"avgfee":x["avgfee"]})
     print(templist)
     return templist
+
+def getLawyerField(field):
+    templist=[]
+    
+    results = client.legalaid.lawyerfield.find({"law":field})
+    
+    for x in results:
+        curfield=x["field"]
+        searchresults=client.legalaid.lawyers.find({"field":curfield})
+        #print(curfield)
+    
+    #pprint(results)
+    #pprint(searchresults)
+    
+    for y in searchresults:
+        templist.append({"name":y["name"],"phonenumber":y["phonenumber"],"field":y["field"],"avgfee":y["avgfee"]})
+    print(templist)
+    
+    return templist
     
